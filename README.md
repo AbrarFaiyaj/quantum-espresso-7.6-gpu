@@ -1,8 +1,32 @@
 ![q-e-logo](logo.jpg)
 
-This is the distribution of the Quantum ESPRESSO suite of codes (ESPRESSO:
-opEn-Source Package for Research in Electronic Structure, Simulation, and
-Optimization)
+## About this repository
+
+This is my personal working copy of Quantum ESPRESSO 7.6, set up to run
+side by side in three configurations on a single workstation: a CPU-only
+build (gcc + Intel oneAPI MKL) and two GPU-accelerated builds (NVIDIA HPC
+SDK 24.3 and 26.5, CUDA Fortran/OpenACC on a Turing-generation GPU),
+cross-checked against Quantum ESPRESSO's own regression test-suite.
+
+The main reason this exists: I wanted to confirm that the newly-released
+NVHPC 26.5 toolchain (CUDA 13.2) still builds and runs QE 7.6 correctly
+before adopting it, without losing the known-good 24.3 build as a fallback.
+Getting there also meant tracking down a few real, non-obvious problems —
+a broken git-submodule state that silently blocked any CMake configure, a
+Fortran-module ABI mismatch from sharing one MPI library across three
+different Fortran compilers, an MPI launcher/binary mismatch that made
+"parallel" runs silently execute as four uncoordinated single-rank
+processes, and a GPU-aware-MPI crash traced to multiple ranks contending
+for one physical GPU.
+
+**[`build/README.md`](build/README.md)** has the full write-up: the exact
+`cmake` invocation for each of the three variants, the reasoning behind
+each toolchain decision, and the test-suite results (benchmark-matched
+energies across CPU and both GPU builds, with every remaining gap traced
+to either a documented upstream QE-on-GPU limitation or a specific,
+named bug).
+
+Everything below this section is Quantum ESPRESSO's own upstream README.
 
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
