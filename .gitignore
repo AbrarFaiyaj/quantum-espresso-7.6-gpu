@@ -58,3 +58,8 @@ LAXlib/*.fh
 **/Doc/INPUT_*.txt
 **/Doc/INPUT_*.html
 **/Doc/INPUT_*.xml
+
+build-libxc/
+install/git_devx
+install/git_mbd
+KS_Solvers/ks_solver_interfaces.fh
